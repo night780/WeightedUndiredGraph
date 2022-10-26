@@ -14,6 +14,7 @@ import java.util.Map;
 public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
 
     private Map<V, Node> adjacencyList = new HashMap<>();
+    private int edgeCount = 0;
 
     @Override
     public boolean addVertex(V element) {
@@ -48,6 +49,8 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
 
         addDirectedEdge(first, second, weight); // Adding the first edge to the graph.
         addDirectedEdge(second, first, weight); // Adding the second edge to the graph.
+        edgeCount++; // Incrementing the edge count.
+        edgeCount++; // Incrementing the edge count.
         return true;
     }
 
@@ -100,16 +103,42 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
 
     @Override
     public boolean removeEdge(V first, V second) {
+
+        if (containsEdge(first, second)) { // Checking if the edge is in the graph.
+            removeDirectedEdge(first, second); // Removing the first edge.
+            removeDirectedEdge(second, first); // Removing the second edge.
+            edgeCount--; // Decrementing the edge count.
+            edgeCount--; // Decrementing the edge count.
+            return true;
+        }
         return false;
+    }
+
+    private void removeDirectedEdge(V first, V second) {
+Node current = adjacencyList.get(first); // Getting the first element in the list.
+
+        if (current.otherVertex.equals(second)) { // Checking if the first element is the second element.
+            adjacencyList.put(first, current.next); // Removing the first element from the list.
+        } else { // If the first element is not the second element.
+            while (current.next != null) { // Iterating through the list.
+                if (current.next.otherVertex.equals(second)) { // Checking if the next element is the second element.
+                    current.next = current.next.next; // Removing the next element from the list.
+                    break;
+                }
+                current = current.next; // Moving to the next element in the list.
+            }
+        }
     }
 
     @Override
     public int vertexSize() {
-        return 0;
+        //the same as the number of keys in the map
+        return adjacencyList.size();
     }
 
     @Override
     public int edgeSize() {
+
         return 0;
     }
 

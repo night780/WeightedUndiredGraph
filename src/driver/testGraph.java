@@ -43,6 +43,8 @@ StrinGraph.addEdge("A","E",1);
         System.out.println("Contains Edge [A,H]? :"+StrinGraph.containsEdge("A","H"));
         System.out.println("Contains Edge [A,I]? :"+StrinGraph.containsEdge("A","I"));
         System.out.println("Contains Edge [A,J]? :"+StrinGraph.containsEdge("A","J"));
+
+        System.out.println("|V| = "+StrinGraph.vertexSize());
     }
 }
 
