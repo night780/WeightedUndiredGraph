@@ -2,10 +2,12 @@ package graphs;
 
 import adts.IWeightedUndirectedGraph;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The `MyGraph` class is a graph that uses an adjacency list to store the vertices and edges
+ *
  * @author Jacob J
  * @version 1.0
  */
@@ -20,7 +22,7 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
         if (containsVertex(element)) {
             return false;
         }
-        adjacencyList.put(element,null); // Adding the element to the graph. (the value is null because it is the
+        adjacencyList.put(element, null); // Adding the element to the graph. (the value is null because it is the
         // first element in the list)
         return true;
     }
@@ -32,6 +34,7 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
         for (V element : elements) { // Iterating through the elements.
 
             boolean added = addVertex(element); // Adding each element to the graph.
+
             result = result && added; // If one of the elements is not added, the result will be false.
         }
         return result;
@@ -42,30 +45,31 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
         if (containsEdge(first, second)) { // Checking if the edge is already in the graph.
             return false;
         }
-        Node oldHeadFirst = adjacencyList.get(first); // Getting the old head of the first element.
-        Node oldHeadSecond = adjacencyList.get(second); // Getting the old head of the second element.
 
-        if (oldHeadFirst == null) { // If the first element is the first element in the list.
-
-            adjacencyList.put(first, new Node(second, weight)); // Adding the second element to the list.
-        }
-        else { // If the first element is not the first element in the list.
-
-
-            adjacencyList.put(first, new Node(second, weight, oldHeadFirst));// putting a new node at the start of
-            // the linked list.
-        }
-
-        if (oldHeadSecond == null) { // If the second element is the first element in the list.
-
-            adjacencyList.put(second, new Node(first, weight)); // Adding the first element to the list.
-        }
-        else { // If the second element is not the first element in the list.
-
-            adjacencyList.put(second, new Node(first, weight, oldHeadSecond));// putting a new node at the start of
-            // the linked list.
-        }
+        addDirectedEdge(first, second, weight); // Adding the first edge to the graph.
+        addDirectedEdge(second, first, weight); // Adding the second edge to the graph.
         return true;
+    }
+
+    /**
+     * Adding a new node to the start of the linked list
+     *
+     * @param first  The first element in the edge.
+     * @param second The second element in the edge.
+     * @param weight The weight of the edge.
+     */
+    private void addDirectedEdge(V first, V second, int weight) {
+        Node oldHead = adjacencyList.get(first); // Getting the old head of the first element.
+
+        if (oldHead == null) { // If the first element is the first element in the list.
+            adjacencyList.put(first, new Node(second, weight)); // Adding the second element to the list.
+
+        } else // If the first element is not the first element in the list.
+        {
+
+            // putting a new node at the start of the linked list.
+            adjacencyList.put(first, new Node(second, weight, oldHead));
+        }
     }
 
     @Override
@@ -75,6 +79,17 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
 
     @Override
     public boolean containsEdge(V first, V second) {
+
+        if (containsVertex(first) && containsVertex(second)) {
+            Node current = adjacencyList.get(first); // Getting the first element in the list.
+
+            while (current != null) { // Iterating through the list.
+                if (current.otherVertex.equals(second)) { // Checking if the current element is the second element.
+                    return true;
+                }
+                current = current.next; // Moving to the next element in the list.
+            }
+        }
         return false;
     }
 
@@ -104,7 +119,7 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
     }
 
     //inner class
-    private class Node{
+    private class Node {
 
         private V otherVertex; //the other vertex in the edge
         private int weight; //the weight of the edge
@@ -112,15 +127,24 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
 
         private Node next; //next node in the linked list
 
-        public Node(V otherVertex, int weight){
+        public Node(V otherVertex, int weight) {
             this.otherVertex = otherVertex;
             this.weight = weight;
         }
 
-        public Node(V otherVertex, int weight, Node next){
+        public Node(V otherVertex, int weight, Node next) {
             this.otherVertex = otherVertex;
             this.weight = weight;
             this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "otherVertex=" + otherVertex +
+                    ", weight=" + weight +
+                    ", next=" + next +
+                    '}';
         }
     }
 }

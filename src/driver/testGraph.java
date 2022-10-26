@@ -29,7 +29,20 @@ public class testGraph
             System.out.println("Contains ["+string+"]? :"+StrinGraph.containsVertex(string));
 
         }
+        System.out.println();
+StrinGraph.addEdge("A","B",1);
+StrinGraph.addEdge("A","C",1);
+StrinGraph.addEdge("A","E",1);
 
+        System.out.println("Contains Edge [A,B]? :"+StrinGraph.containsEdge("A","B"));
+        System.out.println("Contains Edge [A,C]? :"+StrinGraph.containsEdge("A","C"));
+        System.out.println("Contains Edge [A,E]? :"+StrinGraph.containsEdge("A","E"));
+        System.out.println("Contains Edge [A,D]? :"+StrinGraph.containsEdge("A","D"));
+        System.out.println("Contains Edge [A,F]? :"+StrinGraph.containsEdge("A","F"));
+        System.out.println("Contains Edge [A,G]? :"+StrinGraph.containsEdge("A","G"));
+        System.out.println("Contains Edge [A,H]? :"+StrinGraph.containsEdge("A","H"));
+        System.out.println("Contains Edge [A,I]? :"+StrinGraph.containsEdge("A","I"));
+        System.out.println("Contains Edge [A,J]? :"+StrinGraph.containsEdge("A","J"));
     }
 }
 
