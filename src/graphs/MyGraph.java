@@ -103,13 +103,11 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
 
     @Override
     public boolean removeVertex(V element) {
-        Node current = adjacencyList.get(element); // Getting the first element in the list.
-        while (current != null) { // Iterating through the list.
-            removeEdge(element, current.otherVertex); // Removing the edge between the current element and the element
-            // to be removed.
-            current = current.next; // Moving to the next element in the list.
+        if (containsVertex(element)) { // Checking if the element is in the graph.
+            adjacencyList.remove(element); // Removing the element from the graph.
+            vertexCount--; // Decrementing the vertex count.
+            return true;
         }
-
         return false; // Did not remove the vertex.
     }
 
@@ -217,5 +215,14 @@ Node current = adjacencyList.get(first); // Getting the first element in the lis
                     ", next=" + next +
                     '}';
         }
+    }
+
+    @Override
+    public String toString() {
+        return "MyGraph{" +
+                "adjacencyList=" + adjacencyList +
+                ", edgeCount=" + edgeCount +
+                ", vertexCount=" + vertexCount +
+                '}';
     }
 }
