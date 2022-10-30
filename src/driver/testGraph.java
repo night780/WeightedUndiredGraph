@@ -35,6 +35,7 @@ public class testGraph {
         StrinGraph.addEdge("A", "E", 1);
 
 
+        // Checking if the edge is in the graph and then removing it and then checking if it is in the graph again.
         System.out.println("Contains Edge [A,B]? :" + StrinGraph.containsEdge("A", "B"));
         System.out.println("\tRemoving edge [A,B]");
         StrinGraph.removeEdge("A", "B");
@@ -43,15 +44,22 @@ public class testGraph {
 
 
 
+        // Checking if the vertex is in the graph and then removing it and then checking if it is in the graph again.
         System.out.println("Contains vertex [A]? :" + StrinGraph.containsVertex("A"));
         System.out.println("\tRemoving vertex [A]" );
         StrinGraph.removeVertex("A");
         System.out.println("Contains vertex [A]? :" + StrinGraph.containsVertex("A"));
         System.out.println();
+
+
         System.out.println("Contains Edge [A,C]? :" + StrinGraph.containsEdge("A", "C"));
         System.out.println("Contains Edge [A,E]? :" + StrinGraph.containsEdge("A", "E"));
 
+        // Printing the number of vertices and edges in the graph
+        System.out.println("Number of vertices: " + StrinGraph.vertices());
+        System.out.println("Number of edges: " + StrinGraph.edges());
 
+        // Printing the number of vertices in the graph.
         System.out.println("|V| = " + StrinGraph.vertexSize());
     }
 }
