@@ -2,6 +2,8 @@
 package adts;
 
 
+import java.util.Set;
+
 /**
  * This is an interface for a weighted undirected graph.
  *
@@ -102,5 +104,20 @@ public interface IWeightedUndirectedGraph<V> {
      * @return The number of edges incident to vertex.
      */
     int degree(V vertex);
+
+    /**
+     * Returns a set of all vertices in the graph.
+     *
+     * @return A set of all the vertices in the graph.
+     */
+    Set<V> vertices();
+
+
+    /**
+     * Returns a set of all edges in the graph.
+     *
+     * @return A set of edges.
+     */
+    Set<Edge<V>> edges();
 
 }

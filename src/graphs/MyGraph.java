@@ -1,9 +1,13 @@
 package graphs;
 
+import adts.Edge;
 import adts.IWeightedUndirectedGraph;
+import org.w3c.dom.Node;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The `MyGraph` class is a graph that uses an adjacency list to store the vertices and edges
@@ -15,6 +19,7 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
 
     private Map<V, Node> adjacencyList = new HashMap<>();
     private int edgeCount = 0;
+    private int vertexCount = 0;
 
     @Override
     public boolean addVertex(V element) {
@@ -98,12 +103,18 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
 
     @Override
     public boolean removeVertex(V element) {
-        return false;
+        Node current = adjacencyList.get(element); // Getting the first element in the list.
+        while (current != null) { // Iterating through the list.
+            removeEdge(element, current.otherVertex); // Removing the edge between the current element and the element
+            // to be removed.
+            current = current.next; // Moving to the next element in the list.
+        }
+
+        return false; // Did not remove the vertex.
     }
 
     @Override
     public boolean removeEdge(V first, V second) {
-
         if (containsEdge(first, second)) { // Checking if the edge is in the graph.
             removeDirectedEdge(first, second); // Removing the first edge.
             removeDirectedEdge(second, first); // Removing the second edge.
@@ -146,6 +157,37 @@ Node current = adjacencyList.get(first); // Getting the first element in the lis
     public int degree(V vertex) {
         return 0;
     }
+
+    /**
+     * Returns a set of all vertices in the graph.
+     *
+     * @return A set of all the vertices in the graph.
+     */
+    @Override
+    public Set<V> vertices() {
+        return adjacencyList.keySet();
+    }
+
+    /**
+     * Returns a set of all edges in the graph.
+     *
+     * @return A set of edges.
+     */
+    @Override
+    public Set<Edge<V>> edges() {
+        Set<Edge<V>> edges = new HashSet<>(); // The set of edges.
+
+        for (V vertex : vertices()) { // Iterating through the vertices.
+            Node current = adjacencyList.get(vertex); // Getting the first element in the list.
+
+            while (current != null) { // Iterating through the list.
+                edges.add(new Edge<>(vertex, current.otherVertex, current.weight)); // Adding the edge to the set.
+                current = current.next; // Moving to the next element in the list.
+            }
+        }
+        return edges;
+    }
+
 
     //inner class
     private class Node {
