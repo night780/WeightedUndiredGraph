@@ -2,6 +2,8 @@ package driver;
 
 import graphs.MyGraph;
 
+import java.util.List;
+
 /**
  * This class creates a graph and adds data to it and then checks if the data is in the graph
  *
@@ -16,6 +18,28 @@ public class testGraph {
      * @param args the input arguments
      */
     public static void main(String[] args) {
+        MyGraph<Character> charGraph = new MyGraph<>();
+
+        charGraph.addVertex('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+
+        charGraph.addEdge('A', 'B', 1);
+        charGraph.addEdge('A', 'C', 1);
+        charGraph.addEdge('A', 'D', 1);
+        charGraph.addEdge('B', 'E', 1);
+        charGraph.addEdge('B', 'F', 1);
+        charGraph.addEdge('C', 'G', 1);
+        charGraph.addEdge('C', 'H', 1);
+        charGraph.addEdge('D', 'I', 1);
+        charGraph.addEdge('D', 'J', 1);
+
+        List<Character> traversal = charGraph.dfs('C');
+
+        System.out.println(traversal);
+    }
+
+
+
+    private void firstGraphTest(){
         //declaring and initializing a graph and data
         String[] strings = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
         MyGraph<String> StrinGraph = new MyGraph<>();
@@ -59,6 +83,10 @@ public class testGraph {
         System.out.println("Number of vertices: " + StrinGraph.vertices());
         System.out.println("Number of edges: " + StrinGraph.edges());
 
+
+        System.out.println("Breath First Search: " + StrinGraph.bfs("C"));
+
+        System.out.println("Depth First Search: " + StrinGraph.dfs("C"));
         // Printing the number of vertices in the graph.
         System.out.println("|V| = " + StrinGraph.vertexSize());
     }

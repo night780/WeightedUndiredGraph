@@ -2,12 +2,8 @@ package graphs;
 
 import adts.Edge;
 import adts.IWeightedUndirectedGraph;
-import org.w3c.dom.Node;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The `MyGraph` class is a graph that uses an adjacency list to store the vertices and edges
@@ -124,7 +120,7 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
     }
 
     private void removeDirectedEdge(V first, V second) {
-Node current = adjacencyList.get(first); // Getting the first element in the list.
+        Node current = adjacencyList.get(first); // Getting the first element in the list.
 
         if (current.otherVertex.equals(second)) { // Checking if the first element is the second element.
             adjacencyList.put(first, current.next); // Removing the first element from the list.
@@ -186,6 +182,64 @@ Node current = adjacencyList.get(first); // Getting the first element in the lis
         return edges;
     }
 
+    /**
+     * Return a list of all the vertices in the graph in the order they were visited by a depth-first search starting at
+     * the given vertex.
+     *
+     * @return A list of vertices in the graph in the order they were visited by the DFS algorithm.
+     */
+    @Override
+    public List<V> dfs(V source) {
+
+        Set<V> allVerts = vertices(); // Getting all the vertices in the graph.
+
+        if (allVerts.isEmpty()) { // Checking if the graph is empty.
+            return new ArrayList<>(); // Returning an empty list.
+        }
+
+        List<V> traversalResults = new ArrayList<>(); // The list of vertices in the order they were visited.
+        Set<V> visited = new HashSet<>(); // The set of visited vertices.
+
+        dfsRecursive(source, traversalResults, visited); // Calling the recursive method.
+        return traversalResults;
+    }
+
+    //a list for our results - maintains the traversal order
+    // a set for determining  what we've seen already, fast!
+    private void dfsRecursive(V current, List<V> traversal, Set<V> visted) {
+        if(!visted.contains(current)) {
+            // Adding the current vertex to the set of visited vertices.
+            visted.add(current);
+
+            // Adding the current vertex to the list of vertices in the order they were visited.
+            traversal.add(current);
+
+            // Getting the first element in the list.
+            Node neighbor = adjacencyList.get(current);
+
+
+            // Iterating through the linked list.
+            while(neighbor != null) {
+
+                // Calling the recursive method on the next vertex in the linked list.
+                dfsRecursive(neighbor.otherVertex, traversal, visted);
+
+                // Moving to the next element in the linked list.
+                neighbor = neighbor.next;
+            }
+        }
+    }
+
+    /**
+     * Return a list of all the nodes in the graph in the order they were visited by a breadth-first search starting at the
+     * given node.
+     *
+     * @return A list of vertices in the order they were visited.
+     */
+    @Override
+    public List<V> bfs(V source) {
+        return null;
+    }
 
 
     //inner class

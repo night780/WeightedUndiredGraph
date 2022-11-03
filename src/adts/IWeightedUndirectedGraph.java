@@ -2,6 +2,7 @@
 package adts;
 
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -95,7 +96,7 @@ public interface IWeightedUndirectedGraph<V> {
     int edgeSize();
 
 
-    //algorithms
+
 
     /**
      * Returns the number of edges incident to vertex.
@@ -119,5 +120,22 @@ public interface IWeightedUndirectedGraph<V> {
      * @return A set of edges.
      */
     Set<Edge<V>> edges();
+
+
+    // traversal algorithms
+    /**
+     * Return a list of all the vertices in the graph in the order they were visited by a depth-first search starting at
+     * the given vertex.
+     *
+     * @return A list of vertices in the graph in the order they were visited by the DFS algorithm.
+     */
+    List<V> dfs(V source);
+    /**
+     * Return a list of all the nodes in the graph in the order they were visited by a breadth-first search starting at the
+     * given node.
+     *
+     * @return A list of vertices in the order they were visited.
+     */
+    List<V> bfs(V source);
 
 }
