@@ -238,7 +238,33 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
      */
     @Override
     public List<V> bfs(V source) {
-        return null;
+
+        List<V> traversal= new ArrayList<>(); // The list of vertices in the order they were visited.
+        Set<V> visited = new HashSet<>(); // The set of visited vertices.
+        Queue<V> bfsQueue = new LinkedList<>(); // The queue of vertices to visit.
+
+        bfsQueue.add(source); // Adding the source vertex to the queue.
+        int count = 0; // The number of vertices visited.
+
+        while(traversal.size() < count){
+            V next = bfsQueue.remove(); // Removing the first element in the queue.
+
+            if(!visited.contains(next)) { // Checking if the vertex has been visited.
+                visited.add(next); // Adding the vertex to the set of visited vertices.
+                traversal.add(next); // Adding the vertex to the list of vertices in the order they were visited.
+
+                Node neighbor = adjacencyList.get(next); // Getting the first element in the list.
+
+                while(neighbor != null) { // Iterating through the list.
+                    if (!visited.contains(neighbor.otherVertex)) { // Checking if the vertex has been visited.
+                        bfsQueue.add(neighbor.otherVertex); // Adding the vertex to the queue.
+                        neighbor = neighbor.next; // Moving to the next element in the list.
+                    }
+                }
+            }
+        }
+
+        return traversal;
     }
 
 
@@ -262,14 +288,7 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V> {
             this.next = next;
         }
 
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "otherVertex=" + otherVertex +
-                    ", weight=" + weight +
-                    ", next=" + next +
-                    '}';
-        }
+
     }
 
     @Override
